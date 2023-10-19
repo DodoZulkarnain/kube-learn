@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-selector1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: selector-test
+  template:
+    metadata:
+      labels:
+        type: selector-test
+    spec:
+      containers:
+      - name: ct-selector
+        image: nginx
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        harddisk: ssd
+

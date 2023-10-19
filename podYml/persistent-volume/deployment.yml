@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-data
+spec:
+  selector:
+    matchLabels:
+      apps-type: data-a
+  template:
+    metadata:
+      labels:
+        apps-type: data-a
+    spec:
+      volumes:
+        - name: volume-nfs
+          persistentVolumeClaim:
+            claimName: pvc-a
+      containers:
+      - name: ct-data
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: volume-nfs
+          mountPath: /usr/share/nginx/html

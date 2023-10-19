@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: root-certificate
+spec:
+  isCA: true
+  commonName: root CA
+  secretName: root-certificate
+  duration: 87600h0m0s
+  renewBefore: 86400h0m0s
+  usages:
+    - cert sign
+  privateKey:
+    algorithm: RSA
+    size: 2048
+    encoding: PKCS1
+  issuerRef:
+    name: root-issuer
+    kind: Issuer
+    group: cert-manager.io

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-preffered-affinity
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: preffered-affinity-test
+  template:
+    metadata:
+      labels:
+        type: preffered-affinity-test
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                - ssd
+      containers:
+      - name: ct-preferred-affinity
+        image: nginx
+        ports:
+        - containerPort: 80

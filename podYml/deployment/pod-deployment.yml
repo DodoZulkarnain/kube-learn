@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-deployment
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - nginx
+      - key: env
+        operator: In
+        values:
+          - prod
+          - qa
+          - testing
+  template:
+    metadata:
+      labels:
+        app: nginx
+        env: qa
+        env: testing
+    spec:
+      containers:
+      - name: ct-rs
+        image: deni02/myapp:v2.0
+        ports:
+        - containerPort: 80

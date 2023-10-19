@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dev-netpolicy
+  namespace: dev
+spec:
+  podSelector:
+    matchLabels:
+      run: pod-dev
+  policyTypes:
+  - Ingress
+  - Egress
+# add this
+  ingress:
+  - from:
+    - namespaceSelector:
+       matchLabels:
+# koneksi masuk berasal dari namespace default
+          kubernetes.io/metadata.name: default
+#koneksi keluar, hanya mengizinkan akses ke port 80
+  egress:
+  - to:
+    ports:
+    - protocol: TCP
+      port: 80
